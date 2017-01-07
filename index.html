@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html>
+<!--
+	作者：mister_chao@126.com
+	时间：2016-10-29
+	描述：
+-->
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		
+		<title>仿-麦考林</title>
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" href="css/style.css" />
+		<style>
+#b04 { width: 640px;}
+#b04 .dots { position: absolute; left: 0; right: 0; bottom: 20px;}
+#b04 .dots li 
+{ 
+	display: inline-block; 
+	width: 10px; 
+	height: 10px; 
+	margin: 0 4px; 
+	text-indent: -999em; 
+	border: 2px solid #fff; 
+	
+	cursor: pointer; 
+	opacity: .4; 
+	-webkit-transition: background .5s, opacity .5s; 
+	-moz-transition: background .5s, opacity .5s; 
+	transition: background .5s, opacity .5s;
+}
+#b04 .dots li.active 
+{
+	background: #fff;
+	opacity: 1;
+}
+#b04 .arrow { position: absolute; top: 200px;}
+#b04 #al { left: 15px;}
+#b04 #ar { right: 15px;}
+.banner { position: relative; overflow: auto; text-align: center;}
+.banner li { list-style: none; }
+.banner ul li { float: left; }
+</style>
+
+		<script type="text/javascript" src="js/jquery-1.12.3.js"></script>
+		<script type="text/javascript" src="js/unslider.min.js" ></script>
+		<script type="text/javascript" src="js/jquery.cookie.js" ></script>
+		<script>
+			$(function() {
+				//文字背景，图片偏移
+				var obj = $('.posi')
+				$.each(obj, function() {
+					$(this).mouseover(function() {
+						$(this).find('.zi').css('background', '#eeafce')
+						$(this).find('.zuo').css('right', '5px')
+						$(this).find('.you').css('left', '5px')
+						$(this).find('.zi2').css('background', '#97c86c')
+						$(this).find('.zi3').css('background', '#8ccedc')
+					})
+					$(this).mouseout(function() {
+						$(this).find('.zi').css('background', '#fff')
+						$(this).find('.zuo').css('right', '0px')
+						$(this).find('.you').css('left', '0px')
+						$(this).find('.zi2').css('background', '#fff')
+						$(this).find('.zi3').css('background', '#fff')
+					})
+				});
+				//回到顶部
+				$(window).scroll(function() {
+
+						if($(window).scrollTop() > 200) {
+							//console.log($(window).scrollTop())
+							$('#scr').fadeIn(1000)
+						} else {
+							$('#scr').fadeOut(1000)
+						}
+
+					})
+					//nav 里面的li变色
+				$('#nav ul li').mouseenter(function() {
+					$(this).css('background', '#db366f')
+				})
+				$('#nav ul li').mouseleave(function() {
+					$(this).css('background', 'url(img/navbg.png) no-repeat bottom center #d10048')
+					
+				})
+
+				//span里面的a变色
+				$('#nav ul li span a').mouseenter(function() {
+					$(this).css('background', '#db366f')
+				})
+				$('#nav ul li span a').mouseleave(function() {
+					$(this).css('background', '#ababab')
+				})
+
+				//li里面的span显示与隐藏
+				$('#sp').mouseenter(function() {
+					$('#spa').show(200)
+				})
+				$('#sp').mouseleave(function() {
+						$('#spa').hide(200)
+					})
+					//号码图片显示与隐藏
+				$('#tel').mouseenter(function() {
+                  $('#ke').css('z-index',9999)
+					$('#ke').animate({
+						'right': 66,
+						'opacity': 1
+					}, 400)
+				})
+
+				$('#tel').mouseleave(function() {
+                    //$('#ke').css('z-index',-9999)
+					$('#ke').animate({
+						'right': 200,
+						'opacity': 0
+					}, 400,function(){$('#ke').css('z-index',-9999)})
+				})
+
+			})
+		</script>
+		
+	
+		<script type="text/javascript">
+			$(function(){
+				var str = $.cookie('login');
+				
+				if(str==undefined ||str==""){
+					$('#top #xxxx a').html('请登录').css('color','orangered');
+					
+				}else{
+					var oCookie = JSON.parse(str);
+					console.log(oCookie);
+					if(oCookie.type==false){
+						$('#top #xxxx a').html('请登录').css('color','orangered');
+						
+					}else{
+						$('#top #xxxx a').html(oCookie.name).css('color','orangered');
+					}
+				}
+			})
+		</script>
+		
+
+	</head>
+
+	<body>
+		<div id="nav">
+			<ul>
+				<li>
+					<a href="index.html">首页</a>
+				</li>
+				<li id="sp">
+					<a href="#">品牌系列</a>
+					<span id="spa">
+						<a class="top1" href="#">维您</a>
+						<a href="#">LA CELLER</a>
+						<a href="#">秘密花园</a>
+						<a href="#" style="border-bottom: 1px solid #888;">SONOKO</a>
+					</span>
+				</li>
+				<li class="meirong">
+					<a href="shangpinliebiao.html?json/meirong.json&0">美容护肤</a>
+				</li>
+				<li class="jiankang">
+					<a href="shangpinliebiao.html?json/jiankang.json&6">健康养生</a>
+				</li>
+				<li class="jiayong">
+					<a href="shangpinliebiao.html?json/jiayong.json&12">家居日用</a>
+				</li>
+				<li>
+					<a href="#">积分换购</a>
+				</li>
+				<li class="vip">
+					<a href="#">VIP<br />会员专区</a>
+				</li>
+				<li>
+					<a href="#">电子刊物</a>
+				</li>
+				<li>
+					<a href="#">关于麦考林</a>
+				</li>
+			</ul>
+		</div>
+
+		<div id="top">
+			<div class="logo">
+				<a href="index.html"><img src="img/newlogo.png" /></a>
+			</div>
+
+			<ul>
+				<li>
+					<a class="search" href="#"></a>
+				</li>
+				<li class="top-bg" id="xxxx">
+					<a href="denglu.html">登录</a>
+				</li>
+				<li class="top-bg">
+					<a href="zhuce.html">注册</a>
+				</li>
+				<li class="top-bg">
+					<a href="#">我的账户</a>
+				</li>
+				<li class="none">
+					<a class="car" href="gouwucar.html"></a>
+				</li>
+				<li class="none"><img src="img/tel-call.png" /></li>
+			</ul>
+			<div id="phone">
+				<a href="#"><img src="img/rs1.png" /></a>
+				<a href="#" id="tel"><img src="img/rs2.png" /></a>
+				<a href="#"><img id="scr" src="img/right.png" / style="display: none;"></a>
+			</div>
+			<div id="ke"><img src="img/ke.png" /></div>
+		</div>
+
+		<div class="banner" id="b04">
+    <ul>
+        <li><img src="img/01.jpg"></li>
+        <li><img src="img/02.jpg"></li>
+        <li><img src="img/03.jpg"></li>
+        <li><img src="img/04.jpg"></li>
+        
+    </ul>
+    <a href="javascript:void(0);" class="unslider-arrow04 prev"><img class="arrow" id="al" src="images/arrowl.png" alt="prev" width="20" height="35"></a>
+    <a href="javascript:void(0);" class="unslider-arrow04 next"><img class="arrow" id="ar" src="images/arrowr.png" alt="next" width="20" height="37"></a>
+</div>
+<script>
+$(document).ready(function(e) {
+    var unslider04 = $('#b04').unslider({
+		dots: true
+	}),
+	data04 = unslider04.data('unslider');
+	
+	$('.unslider-arrow04').click(function() {
+        var fn = this.className.split(' ')[1];
+        data04[fn]();
+    });
+});
+</script>
+
+
+		<div id="link">
+			<div id="link-1">
+				<div class="la">
+					<a href="#">
+						<div class="la1">
+							<img class="la11" src="img/05.jpg" />
+						</div>
+					</a>
+					<a href="#">
+						<div class="la1 posi">
+							<div class="a1 lef zi">
+								<h2>秘密花园</h2>
+								<p>低碳、环保；安全、有效。坚持汲取自然植物的力量，以绿色原料、环保包装来缔造健康肌肤为理念; 采用符合国际所认可的生产标准，创造安全...</p>
+								<p class="price">查看全文&gt;&gt;</p>
+							</div>
+							<div class="righ zuo"><img class="a9" src="img/06.jpg" /></div>
+						</div>
+					</a>
+					<a href="#">
+						<div class="la1 posi">
+							<div class="lef you"><img class="a9" src="img/07.jpg" /></div>
+							<div class="a1 righ zi">
+								<h2>看看男神好哪口</h2>
+								<p>相信每一位女孩在心中都有一位梦中情人，ta可能是温柔的，又可能是霸道的；ta可能是热爱运动的，又可能是安静温文的。情人节来临之际，...</p>
+								<p class="price">查看全文&gt;&gt;</p>
+							</div>
+
+						</div>
+					</a>
+				</div>
+				<div class="la">
+					<a href="#">
+						<div class="la1 posi">
+							<div class="a2 lef zi">
+								<h2>秘密花园玫瑰精萃靓肤面贴膜</h2>
+								<p>蕴含玫瑰精油、玫瑰纯露、玫瑰果油、银耳、芦荟等植物精萃，缓解因缺水引起的干燥、紧绷、干纹等肌肤现象，肌肤呈现水润细滑的迷人光采。</p>
+								<div class="righ">
+									<p class="price">￥26</p>
+								</div>
+							</div>
+							<div class="a1 righ zuo"><img class="a9" src="img/09.jpg" /></div>
+						</div>
+					</a>
+					<a href="#">
+						<div class="a5"><img class="a5" src="img/10.jpg" /></div>
+					</a>
+
+				</div>
+				<div class="la">
+
+					<a href="#">
+						<div class="la1 posi">
+							<div class="a1 lef zi">
+								<h2>秘密花园玫瑰鲜活水</h2>
+								<p>优选新鲜玫瑰花瓣，采用特殊工艺，单纯萃取玫瑰花瓣的水分，滴滴精粹，层层沁润肌肤；馥郁的玫瑰芬芳，淡雅自然，使你仿佛荡漾于玫瑰花丛，...</p>
+
+							</div>
+							<div class="a1 righ zuo"><img class="a9" src="img/16.jpg" /></div>
+						</div>
+					</a>
+					<a href="#">
+						<div class="la1 posi">
+							<div class="a1 lef you"><img class="a9" src="img/20.jpg" /> </div>
+							<div class="a1 righ zi">
+								<h2>给妈妈们的护肤建议</h2>
+								<p>当了妈妈后，你是否觉得生活琐事越来越多，护肤时间越来越少？倘若不小心，没有注意保养肌肤，及逐渐衰老，最怕的就是，老公也会嫌弃衰老的...</p>
+								<p class="price">查看全文&gt;&gt;</p>
+							</div>
+						</div>
+					</a>
+					<a href="#">
+						<div class="la posi clear">
+							<div class="a1 lef clear zi">
+								<h2>秘密花园玫瑰精粹系列</h2>
+								<p>来自大自然的护肤精纯能量，荟萃天然植物精萃，散发淡雅花香，感受天然之美，还原一个纯净的肌肤环境，让肌肤时刻享受天然植物的细润滋养！</p>
+								<div>
+									<p class="price">￥1250</p>
+								</div>
+							</div>
+							<div class="a1 righ zuo"><img class="a9" src="img/21.jpg" /></div>
+						</div>
+					</a>
+
+				</div>
+			</div>
+
+			<div id="link-2">
+				<a href="#">
+					<div class="lb posi clear">
+						<div class="a1 lef you"><img class="a9" src="img/26.jpg" /></div>
+						<div class="a1 righ zi2">
+							<h2>维您胶原蛋白果味饮料（蜜桃味）</h2>
+							<p>取自法国深海鱼胶原蛋白，小分子可被人体轻松吸收，蜜桃口味，新鲜甜蜜，轻松喝饱胶原蛋白。</p>
+							<div>
+								<p class="price">￥2376<del>￥2376</del></p>
+							</div>
+						</div>
+
+					</div>
+				</a>
+				<a href="#">
+					<div class="lb posi clear">
+						<div class="a1 lef zi2">
+							<h2>维您</h2>
+							<p>维您品牌诞生于20年前的美国洛杉矶，它源于一个忙碌却不善表达的父亲对女儿的承诺，它拥有全球营养源产地 只为提供最天然安全的健康保证...</p>
+							<p class="price">查看全文&gt;&gt;</p>
+						</div>
+						<div class="a1 righ zuo"><img class="a9" src="img/31.jpg"></div>
+
+					</div>
+				</a>
+
+				<a href="#">
+					<div class="lb"><img class="lb" src="img/39.jpg"></div>
+				</a>
+
+			</div>
+
+			<div id="link-3 clear">
+				<a href="#">
+					<div class="lc"><img class="lc" src="img/30.jpg" /></div>
+				</a>
+
+				<div class="lc">
+					<a href="#">
+						<div class="lb posi">
+							<div class="a1 lef you"><img class="a9" src="img/32.jpg" /></div>
+							<div class="a1 righ zi2">
+								<h2>肠胃负担重 卸负有妙招</h2>
+								<p>总是能找到各种理由让你 “心安理得”的去大吃海喝，可你忘记了你的肠胃却在默默的承受着美食带来的“甜蜜的负担”。这种时候，你更加需要...</p>
+								<p class="price">查看全文&gt;&gt;</p>
+							</div>
+						</div>
+					</a>
+					<a href="#">
+						<div class="lb posi">
+							<div class="a1 lef zi2">
+								<h2>维您益生菌粉（膳食纤维果味固体饮料）</h2>
+								<p>含有嗜酸乳杆菌、副干酪乳杆菌、鼠李糖乳杆菌、乳双歧杆菌、植物乳杆菌等人体所需益生菌，酸甜草莓口味，带来好心情。</p>
+
+							</div>
+							<div class="a1 righ zuo"><img class="a9" src="img/33.jpg" /></div>
+
+						</div>
+					</a>
+				</div>
+				<div class="lc">
+					<a href="#">
+						<div class="lb posi">
+							<div class="a1 lef you "><img class="a9" src="img/40.jpg"></div>
+							<div class="a1 righ zi2">
+								<h2>维您酵素液饮品（10支装）</h2>
+								<p>严选上百种蔬果精粹，全程古法发酵，加上独特的自然气候条件，使得维您酵素饮品具有了独特味道和营养价值。</p>
+
+							</div>
+						</div>
+					</a>
+					<a href="#">
+						<div class="lb posi">
+							<div class="a1 lef zi2">
+								<h2>维您综合蔬果乳酸酵素（固体饮料）</h2>
+								<p>十多种蔬果精华，搭配综合水果浓缩粉，清爽的甜度，微微的酸味，水果的味道，为身体注入酵素，感受蔬果的力量。</p>
+
+								<p class="price">￥360<del>￥360</del></p>
+
+							</div>
+							<div class="a1 righ zuo"><img class="a9" src="img/44.jpg" /></div>
+						</div>
+					</a>
+				</div>
+
+			</div>
+
+			<div id="link-4">
+				<a href="#">
+					<div class="lb posi">
+						<div class="a1 lef zi3">
+							<h2>品牌介绍：Homes Up</h2>
+							<p>HOMES-UP捷尚居，是创立于1923年的法国Groupe Adeo（安达屋集团）旗下的全新家居品牌。HOMES-UP谙熟时尚流...</p>
+							<p class="price">查看全文&gt;&gt;</p>
+						</div>
+						<div class="a1 righ zuo"><img class="a9" src="img/51.jpg" /></div>
+					</div>
+				</a>
+				<a href="#">
+					<div class="lb"><img class="lb" src="img/65.jpg" /></div>
+				</a>
+				<a href="#">
+					<div class="lb posi">
+						<div class="a1 lef zi3">
+							<h2>一杯子 一辈子——父爱如山</h2>
+							<p>父爱是山，呵护生命的火；父爱是火，点燃希望 的灯；父爱是灯，照亮前行的路；父爱是路，引领你 的一生。</p>
+							<p class="price">查看全文&gt;&gt;</p>
+						</div>
+						<div class="a1 righ zuo"><img class="a9" src="img/75.jpg" /></div>
+					</div>
+				</a>
+			</div>
+
+			<div id="link-5">
+				<div class="lc">
+					<a href="#">
+						<div class="lb posi">
+							<div class="a1 lef you"><img class="a9" src="img/52.jpg" /></div>
+							<div class="a1 righ zi3">
+								<h2>家居除螨小妙招</h2>
+								<p>在生活中，我们常常被看不见的螨虫侵害，家居防螨除螨就显得尤为重要，小编带麦子们见识一下防螨除螨的几个小妙招，除常规的除螨方法，小编...</p>
+								<p class="price">查看全文&gt;&gt;</p>
+							</div>
+						</div>
+					</a>
+					<a href="#">
+						<div class="lb posi">
+							<div class="a1 lef zi3">
+								<h2>日式桃皮绒家庭收纳六件套</h2>
+								<p>日式桃皮绒家庭收纳六件套，用色艳丽，选用蓝色作为背景色，搭配上白色圆点，相得益彰，设计精美，收纳便捷，给你的居家生活增添更多乐趣。</p>
+
+							</div>
+							<div class="a1 righ zuo"><img class="a9" src="img/53.jpg" /></div>
+						</div>
+					</a>
+				</div>
+				<div class="lc">
+					<a href="#">
+						<div class="lb posi">
+							<div class="a1 lef you"><img class="a9" src="img/66.jpg" /></div>
+							<div class="a1 righ zi3">
+								<h2>那些你不知道的事-毛巾篇</h2>
+								<p>据家纺专家介绍，个人用毛巾用 30 天左右就应该更换，最多不应超过 40 天。否则，就要高温蒸煮把毛巾消毒、软化。因为毛巾用得久了...</p>
+								<p class="price">查看全文&gt;&gt;</p>
+							</div>
+						</div>
+					</a>
+					<a href="#">
+						<div class="lb posi">
+							<div class="a1 lef zi3">
+								<h2>毛巾浴袍组合赠快干梳</h2>
+								<p>100%棉 具有超强的吸水性，吸水能力是普通纤维的7倍手感柔软，易清洗，不易滋生细菌色泽亮丽，超强弹性。</p>
+
+							</div>
+							<div class="a1 righ zuo"><img class="a9" src="img/67.jpg" /></div>
+						</div>
+					</a>
+				</div>
+				<a href="#">
+					<div class="lc"><img class="lc" src="img/76.jpg" /></div>
+				</a>
+
+			</div>
+
+			<div id="link-6">
+				<a href="#">
+					<div class="ld posi">
+						<div class="a2 lef">
+							<h2><a href="#">麦考林全新开启生活家计划</a></h2>
+							<p>
+								<a href="#">倾心于生活情趣的点滴，是为生活家。即将迎来20周岁的女性电商品牌麦考林，开启“生活家计划”，从一个健康与美丽商品和服务的提供者，转...</a>
+								<a href="#">查看全文&gt;&gt;</a>
+							</p>
+						</div>
+						<div class="a3 righ zuo"><img class="a3" src="img/77.jpg" /></div>
+					</div>
+				</a>
+				<a href="#">
+					<div class="ld posi">
+						<div class="a2 lef">
+							<h2><a href="#">爱&amp;梦想 成就美丽的财富人生</a></h2>
+							<p>
+								<a href="#">这是源于一个忙碌却不善表达的父亲对女儿的承诺，为治愈自己重病的女儿，而寻寻觅觅足迹遍布全球，只为寻找到天然安全的健康保证…</a>
+								<a href="#" class="price">查看全文&gt;&gt;</a>
+							</p>
+						</div>
+						<div class="a3 righ zuo"><img class="a3" src="img/78.jpg" /></div>
+					</div>
+				</a>
+			</div>
+
+			<div id="link-7">
+				<a href="#">
+					<div class="ld posi">
+						<div class="a3 lef you"><img class="a3" src="img/79.jpg" /></div>
+						<div class="a2 righ">
+							<h2><a href="#">与爱同行 探访冬虫夏草生产地</a></h2>
+							<p>
+								<a href="#">八年的坚持资捐，八年的爱心传递，麦考林健康事业部创始人吴先生携麦考林精英团队，不远万里再次奔赴青海玉树，只为将爱心带给需要的人…</a>
+								<a class="price" href="#">查看全文&gt;&gt;</a>
+							</p>
+						</div>
+					</div>
+				</a>
+				<a href="#">
+					<div class="ld posi">
+						<div class="a3 lef you"><img class="a3" src="img/80.jpg" /></div>
+						<div class="a2 righ">
+							<h2><a href="#">转型力作 两大新品耀世呈现</a></h2>
+							<p>
+								<a href="#">本次美博会期间刚刚完成战略转型的麦考林对外重磅推出了两款主打的自有产品：美容新品“秘密花园玫瑰鲜活水”萃取于植物细胞水，不添加外来...</a>
+								<a class="price" href="#">查看全文&gt;&gt;</a>
+							</p>
+						</div>
+					</div>
+				</a>
+			</div>
+
+		</div>
+
+		<div id="footer-1">
+			<ul class="ft">
+				<li>
+					<a href="#" class="fta"></a>
+					<a href="#">100%正品保证</a>
+				</li>
+				<li>
+					<a href="#" class="ftb"></a>
+					<a href="#">专业在线客服</a>
+				</li>
+				<li class="last">
+					<a href="#" class="ftc"></a>
+					<a href="#">满99元包邮</a>
+				</li>
+
+			</ul>
+
+		</div>
+		<div id="footer-2">
+			<ul class="u1">
+				<li>
+					<h3>新手指南</h3>
+				</li>
+				<li>
+					<a href="#">新会员注册</a>
+				</li>
+				<li>
+					<a href="#">购物演示</a>
+				</li>
+				<li>
+					<a href="#">常见问题</a>
+				</li>
+
+			</ul>
+			<ul>
+				<li>
+					<h3>付款方式</h3>
+				</li>
+				<li>
+					<a href="#">银行卡支付</a>
+				</li>
+				<li>
+					<a href="#">支付宝支付</a>
+				</li>
+				<li>
+					<a href="#">余额支付</a>
+				</li>
+
+			</ul>
+			<ul>
+				<li>
+					<h3>售后服务</h3>
+				</li>
+				<li>
+					<a href="#">退换货政策</a>
+				</li>
+				<li>
+					<a href="#">退换货流程</a>
+				</li>
+				<li>
+					<a href="#">退款流程</a>
+				</li>
+				<li>
+					<a href="#">发票说明</a>
+				</li>
+
+			</ul>
+			<ul>
+				<li>
+					<h3>特色服务</h3>
+				</li>
+				<li>
+					<a href="#">贵宾专区</a>
+				</li>
+				<li>
+					<a href="#">电子刊物</a>
+				</li>
+				<li>
+					<a href="#">在线客服</a>
+				</li>
+
+			</ul>
+			<div class="bg"></div>
+		</div>
+
+		<div id="footer-3">
+			<ul>
+				<li>
+					<a href="#">关于麦考林</a>
+				</li>
+				<li>
+					<a href="#">INVESTOR RELATIONS</a>
+				</li>
+				<li>
+					<a href="#">联系我们 </a>
+				</li>
+				<li>
+					<a href="#">服务中心</a>
+				</li>
+				<li class="last">
+					<a href="#">加入我们 </a>
+				</li>
+			</ul>
+			<div class="fo">
+				<a href="#"><img src="img/newicon.png" /></a>
+				<p>
+					沪ICP备05003606号Copyright©2011-2015 MecoxLane Inc. All Rights Reserved
+				</p>
+			</div>
+			<div class="eva">
+				<a href="#"><img src="img/evaluate.jpg"></a>
+			</div>
+			<div class="bei">
+				<a href="#"><img src="img/beian.png">
+					<p>沪公网安备 31010402000234号</p>
+				</a>
+			</div>
+
+		</div>
+
+	</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<title></title>
+<link rel="stylesheet" href="css/weiba.css" />
+<style>
+*{margin: 0;padding:0}
+#zhuce {height: 725px;width: 100%;background: url(img/login-reg.gif) -318px 0;position: relative;}
+#zhuce .logo{position: absolute;left: 132px;top:12px;}
+label { display:block;height: 40px;width: 280px;border: 1px solid #888;}
+#zhuce #biao {width: 341px;height: 506px;position: absolute;left: 744px;top: 100px;background:rgba(255,255,255,0.6)}	
+.sub {width: 280px;height: 45px;background:#d10048 ;position: absolute;top: 440px;left: 31px;border-radius: 3px 3px 3px 3px;}
+input{background: rgba(255,255,255,0);}
+#biao .orange1,#biao .orange2{text-decoration: underline;color: orange;}
+	.orange1{position: absolute;top: 24px;left: 140px;}
+	.orange2{position: absolute;top: 24px;left: 262px;}
+	.toutou{position: absolute;left: 31px;top: 24px;}
+#zhuce i {
+		display: inline-block;
+		height: 22px;
+		width: 22px;
+		margin: 8px;
+		float: left;
+	}
+.i1 {background: url(img/index-bg.png) no-repeat -62px 0;}			
+.i2 {background: url(img/index-bg.png) no-repeat -60px -44px;}
+
+input{height: 40px;width: 240px;border: 0;margin: 0px;float: right;}
+#Txtidcode{float: none;}
+.p1{position: absolute;top:89px;left: 31px;}
+.p2{position: absolute;top:159px;left: 31px;}
+.p3{position: absolute;top:299px;left: 31px;}
+.p4{position: absolute;top:368px;left: 31px;}
+.p5{position: absolute;top:413px;left: 31px;}
+#zhuce p {height:16px ;display: none;}
+#zhuce p span{display: inline-block;height: 16px;line-height: 16px;margin-top: 6px;color: #f83652;}
+#zhuce p i{display: inline-block;height: 16px;width: 16px;background: url(img/index-bg.png) no-repeat -65px -225px;}
+
+.lab1{position: absolute;top:49px;left: 31px;}
+.lab2{position: absolute;top:119px;left: 31px;}
+.lab3{position: absolute;top:188px;left: 31px;}
+.lab3 input {height: 40px;width: 140px;border: 0;margin: 0px;float: left;}
+.lab3 a {display:block;height: 34px;width: 90px;line-height: 34px;text-align: center;border: 1px solid #888;border-radius:17px 17px 17px 17px;float: right;margin-top: 2px;margin-right: 3px;}
+.lab4{position: absolute;top:259px;left: 31px;}
+.lab5{position: absolute;top:328px;left: 31px;}	
+.check{position: absolute;top: 404px;left: 31px;height: 13px;width: 13px;}
+.tongyi{position: absolute;top: 404px;left: 58px;}
+.xieyi{position: absolute;top: 404px;left: 156px;color:#f75296 ;text-decoration: underline;}
+
+</style>
+<link rel="stylesheet" href="css/jquery.idcode.css" />
+<script type="text/javascript" src="js/jquery-1.12.3.js" ></script>
+<script type="text/javascript" src="js/jquery.idcode.js" ></script>
+<script type="text/javascript" src="js/jquery.cookie.js" ></script>
+<script>
+	$(function(){
+		 var a=false
+		 var b=false
+		 var c=false
+		 var d=false
+		
+		
+		$('#username').blur(function(){
+		var reg=/^1[34578]\d{9}$/
+
+		if(!reg.test($('#username').val())){
+			$('#zhuce .p1').css('display','block')
+		    if($('#username').val()==''||$('#username').val()==undefined){
+			$('.p1').find('span').html('手机号用来登录，不能为空')
+		}
+			else{
+			  $('.p1').find('span').html('请输入正确的手机号')}
+		}      
+	           else{
+		       	      var sCookie = $.cookie('user');
+                   if(!(sCookie==undefined || sCookie=="")){                   	
+                   	var aCookie = JSON.parse(sCookie);						
+					//遍历查看是否已经注册
+					var bRrg = false //默认未注册
+					$.each(aCookie,function(){
+						if(this.user==$('#username').val()){
+							bRrg=true;
+						}
+					})
+					//为真时表示用户已注册
+					if(bRrg){
+						$('#zhuce .p1').css('display','block')
+						$('.p1').find('span').html('手机号已注册')					
+					}
+					else{	$('#zhuce .p1').css('display','none')
+						 a=true
+					}
+                  }			       	
+		            else{	
+		       	    $('#zhuce .p1').css('display','none')
+		              a=true   }                          }
+         })
+		
+		
+		
+	$('#Txtidcode').blur(function(){
+	var IsBy = $.idcode.validateCode()  //调用返回值，返回值结果为true或者false
+
+       if(!IsBy){
+           $('#zhuce .p2').css('display','block')
+			$('.p2').find('span').html('请输入正确的验证码')
+    }else {
+   $('#zhuce .p2').css('display','none')
+       b=true
+       
+    }	
+ })
+			
+		$('#password').blur(function(){
+		var str=$('#password').val()
+		var reg=/(\d\D)|(\D\d)/
+		var reg1=/^.{6,16}$/
+		var reg2=/^.{1,5}$/
+		var reg3=/^.{17,}$/
+		if(!(reg.test(str)&&reg1.test(str))){
+			 if(str==''||str==undefined){
+			 	 $('#zhuce .p3').css('display','block')
+			 	 $('.p3').find('span').html('密码不能为空')
+			 }
+			 
+			 else if(reg2.test(str)) {
+			 	$('#zhuce .p3').css('display','block')
+			 $('.p3').find('span').html('密码太短啦，不足6个字符')
+			 }
+			 else if(reg3.test(str)){
+			 	$('#zhuce .p3').css('display','block')
+			 $('.p3').find('span').html('密码太长啦，不能超过16个字符')
+			 }
+			 else {
+			 	$('#zhuce .p3').css('display','block')
+			 	$('.p3').find('span').html('请使用数字，字母组合密码')
+			 }
+			
+		}else{
+			$('#zhuce .p3').css('display','none')
+			c=true
+		}
+	})
+	
+	$('#passwordss').blur(function(){
+		var str1=$('#password').val()
+		var str2=$('#passwordss').val()
+		if(str2==''||str2==undefined){
+		$('#zhuce .p4').css('display','block')
+	   $('.p4').find('span').html('重复密码不能为空')}
+		else if(str1!=str2){
+		$('#zhuce .p4').css('display','block')
+	   $('.p4').find('span').html('确认密码不一致')						
+		}
+		else{
+			$('#zhuce .p4').css('display','none')
+			d=true
+		}				
+	})
+	 
+	 
+	 
+   $('.sub').click(function(){
+	   	  if($(':checked').length==0){
+	   	     $('#zhuce .p5').css('display','block')
+	         $('.p5').find('span').html('请阅读并同意用户协议')				   	  	
+	   	     }
+	   	   else if(!(a&&b&&c&&d)){
+	   	   	alert('请检查错误项')
+	   	   	}
+	   	   else{
+	          //生成新的用户对象
+				var newSuer = {user:$('#username').val(),psw:$('#password').val()};
+                  //获取cookie里面的用户信息
+				var sCookie = $.cookie('user');
+				if(sCookie==undefined || sCookie==""){							
+					//如果cookie里的用户信息为空的时候
+					
+					//生成新的用户信息数组
+					var aCookie = [];
+					aCookie.push(newSuer);
+				                                 }
+				else{
+					//如果不为空的时候							
+					//提取cookie里的用户信息
+					var aCookie = JSON.parse(sCookie);					
+						//在用户信息数组中添加新的用户
+			aCookie.push(newSuer);
+				}
+			//将更新后的用户信息数组存入cookie
+			$.cookie('user',JSON.stringify(aCookie),{expires:7 , path:"/"});
+			
+			//console.log($.cookie('user'));
+			open('denglu.html')
+			
+	   	   }
+     })
+	})
+</script>		
+
+
+<script>
+ $(function(){        	
+	$('#foott').load('weibu.html') 
+	$.idcode.setCode();	 
+ })
+</script>
+</head>
+<body>
+<div id="zhuce">
+	<div class="logo"><a href="index.html"><img src="img/newlogo.png"/></a></div>
+	<div id="biao">
+    <span class="toutou">已经有麦考林账号？</span><a class="orange1" href="denglu.html">立即登录</a><a class="orange2" href="#">贵宾激活</a>
+	
+	<label class="lab1"><i class="i1"></i><input id="username" type="text" placeholder="请输入手机号"/></label><br />	
+	<p class="p1"><i></i><span id="utishi"></span></p>
+	<label class="lab2"><input type="text" id ="Txtidcode" class ="txtVerification" placeholder="验证码区分大小写"><span id="idcode"></span><span>换一张</span></label><br />	
+	<p class="p2"><i></i><span></span></p>
+	<label class="lab3"><i class="i2"></i><input type="text" placeholder="请输入短信验证码"/><a href="#">获取短信验证码</a></label><br />					
+	<label class="lab4"><i class="i2"></i><input id="password" type="password" placeholder="密码"/></label><br />	
+	<p class="p3"><i></i><span></span></p>
+	<label class="lab5"><i class="i2"></i><input id="passwordss" type="password" placeholder="确认密码"/></label><br />		
+	<p class="p4"><i></i><span></span></p>
+	<input class="check" type="checkbox" /><span class="tongyi">我已阅读并同意</span><a class="xieyi" href="#">《麦考林用户注册协议》</a>
+     <p class="p5"><i></i><span></span></p>
+     <input class="sub" type="button" value="注册" /><span></span>
+
+	
+	</div>
+	
+</div>
+<div id="foott"></div>
+</body>
+</html>

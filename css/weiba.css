@@ -1,0 +1,46 @@
+html,body,div,h1,h2,h3,h4,h5,h6,span,img,ul,li,a,p,input,dl,dd,del{margin: 0;padding: 0;}
+ul,ul li{list-style: none;}
+a {text-decoration: none; color: #888;}
+img{display: block;}
+h2 {line-height: 22px;margin-bottom: 5px; font-size: 14px;margin-top: 20px;margin-bottom: 20px;}
+p {font-size:12px;line-height:18px;}
+.price {font-size: 14px;color:#d10048 ;}
+.price del {font-size: 12px;color: #888;}
+.posi {position: relative;}
+.lef {position: absolute;left: 0; top:0}
+.righ {position: absolute;top:0;right: 0;}
+.clear:after{display: block;clear: both;content: ".";visibility: hidden;height: 0;}
+.clear{zoom:1;}
+html,body{font-size: 12px;background: #f0f0f0;color: #888;}
+
+#footer-1 {width: 1152px;height: 119px;margin-top: 50px;}
+#footer-1 .fta {display: block;width: 76px;height: 75px;margin-bottom: 10px;
+background: url(../img/footer-bg.png) no-repeat 0 0;margin-right: 20px;}
+#footer-1 .ftb {display: block;width: 76px;height: 75px;margin-right: 20px;
+margin-bottom: 10px;background: url(../img/footer-bg.png) no-repeat 0 -106px;}
+#footer-1 .ftc {display: block;width: 76px;height: 75px;margin-right: 20px;
+margin-bottom: 10px;background: url(../img/footer-bg.png) no-repeat 0 -212px;}
+#footer-1  a {font-size: 14px;margin-left: 0px;display: block;}
+#footer-1  ul li {float: left;width: 105px;height: 90px;}
+#footer-1  ul {margin-top: 20px;margin-left: 451px;width: 449px;height: 119px;}
+
+#footer-2 {width: 100%;height: 190px;border-bottom: 1px solid #888;}
+#footer-2  ul{float: left;width: 117px;height: 150px;}
+#footer-2  ul li a {display: block;height: 30px;line-height: 30px;text-align: center;}
+#footer-2  ul li {height: 30px;line-height: 30px;text-align: center;}
+#footer-2  ul li h3 {font-size: 16px;}
+#footer-2 .u1 {margin-left: 256px;}
+#footer-2 .bg {width: 234px;height: 127px;background:url(../img/bg.gif); float: right;margin-right: 294px;margin-top: 10px;}
+
+
+#footer-3  {width: 100%;height: 148px;position: relative;}
+#footer-3 ul li {float: left;height: 20px;line-height: 20px;padding-left:16px;font-size:14px;padding-right: 16px;border-right: 1px solid #777;}
+#footer-3 ul .last{border: none;}
+#footer-3 ul {position: absolute;left: 356px;top: 36px;}
+#footer-3 .fo {position: absolute;left: 344px;top: 56px;}
+#footer-3 .fo a{float:left;display: block;}
+#footer-3 .fo p{height: 30px;line-height: 30px;width: 520px;font-size: 14px;padding-left: 5px;}
+#footer-3 .eva {position: absolute;left: 479px;top: 103px;}
+#footer-3 .bei {position: absolute;left: 596px;top: 109px;}
+#footer-3 .bei img {display: block;float: left;}
+#footer-3 .bei p {height: 20px;line-height: 20px;width: 200px;}

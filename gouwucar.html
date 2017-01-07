@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<title></title>
+		<link rel="stylesheet" href="css/style.css" />
+		<style>
+			#h33 p {
+				height: 32px;
+				float: left;
+				width: 32px;
+				background: url(img/index-bg.png) no-repeat 0 -48px;
+			}
+			
+			#h33 {
+				margin-left: 32px;
+				padding-top: 24px;
+				padding-bottom: 18px;
+			}
+			
+			#list {
+				width: 942px;
+				margin: 0 auto;
+				
+				border: 1px solid #888;
+			}
+			
+			#list .list1 {
+				height: 34px;
+				background: #fafafa;
+				border-bottom: 1px solid #888;
+				position: relative;
+			}
+			
+			#list li {
+				height: 132px;
+				background: #fffdeb;
+				position: relative;
+			}
+			
+			.o0 {
+				position: absolute;
+				top: 9px;
+				left: 13px;
+			}
+			
+			.o1 {
+				position: absolute;
+				top: 11px;
+				left: 254px;
+			}
+			
+			.o2 {
+				position: absolute;
+				top: 11px;
+				left: 571px;
+			}
+			
+			.o3 {
+				position: absolute;
+				top: 11px;
+				left: 684px;
+			}
+			
+			.o4 {
+				position: absolute;
+				top: 11px;
+				left: 770px;
+			}
+			
+			.o5 {
+				position: absolute;
+				top: 11px;
+				left: 882px;
+			}
+			
+			#list li {
+				border-bottom: 1px dashed #888;
+			}
+			
+			#xialan {
+				width: 942px;
+				background: #fafafa;
+				height: 48px;
+				margin: 20px auto;
+				position: relative;
+			}
+			.w0 {position: absolute;top: 19px;left: 16px;}
+			.w1 {position: absolute;top: 19px;left: 32px;}
+			.w2 {position: absolute;top: 19px;left: 80px;}
+			.w3 {position: absolute;top: 19px;left: 135px;}
+			.w4 {display: block;height: 48px;width: 145px;
+			background: #eb266c;border-radius: 4px 4px 4px 4px;
+			position: absolute;top: 0;right: 0;font-size: 18px;
+			line-height: 48px;text-align: center;color: #fff;}
+			.c0 {position: absolute;top:57px;left:11px;}
+			.c1 {height: 90px; width: 90px;display: block;position: absolute;top:20px;left: 77px;border: 1px solid #888;}
+			.c1 img {height: 90px;width: 70px;display: block;margin: 0 auto;}
+			.c2 {position: absolute;top:23px;left:176px;}
+			.c3 {position: absolute;top:60px;left:547px;}
+			.c4 {display: block;height: 25px;width: 85px;position: absolute;top:55px;left: 637px;border: 1px solid #888;}
+			.c4 a {display:inline-block;height: 25px;width:25px;text-align: center;}
+			.c4 span {display: inline-block;background:#fff;height: 25px;width:33px;border-left: 1px solid #888;border-right: 1px solid #888;text-align: center;line-height: 25px;}
+			.c5 {position: absolute;top: 60px;left: 790px;}
+			.c6 {position: absolute;top:60px;left:877px}
+		</style>
+		<script type="text/javascript" src="js/jquery-1.12.3.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js" ></script>
+		<script type="text/javascript">
+			$(function(){
+				
+				var strCookie = $.cookie("good");
+				
+				if(strCookie==undefined || strCookie==""){
+			    //console.log("没有购买产品")
+				var $li=$('<li style="height: 39px;background: #fff;text-align: center;line-height: 39px;">东西都不买，滚</li>')
+					$('#list').append($li)
+				}
+				else{
+					//刷新产品列表
+					var oCookie = JSON.parse(strCookie);
+					$.each(oCookie, function() {
+						//this  //{title:title,data:{},num:num}
+						
+						var  $li = $('<li/>');
+					
+                     var att=(this.data.price).split(';')[1]
+               
+        $li.append('<input class="c0" type="checkbox" />')
+        $li.append('<a class="c1" href="#"><img src="'+this.data.img+'"/></a>')
+        $li.append('<a class="c2" href="#">'+this.title+'</a>')
+        $li.append('<span class="c3">'+this.data.price+'</span>')
+        $li.append('<span class="c4"><a href="#">-</a><span>'+this.num+'</span><a href="#">+</a></span>')
+        $li.append('<span class="c5">￥'+att*this.num+'</span>')
+        $li.append('<a class="c6" href="#">×删除</a>')
+		$('#list').append($li);
+					});
+				}
+			})
+		</script>
+		
+		
+		<script>
+		$(function(){
+			
+			$('#list').on('mousedown','.c6',function(e){
+							
+				var title = $(e.target).parent().find('.c2').html();
+
+				
+			    var strCookie = $.cookie("good");
+			    var oCookie=JSON.parse(strCookie)
+			   		//console.log(oCookie)
+			   	var aCookie=[]
+			    $.each(oCookie, function(index,value) {
+			    	console.log(title);
+			    	if(this.title!=title){
+
+                     aCookie.push(oCookie[index]) 
+			    	}
+		    	      //aCookie.push(newGood) 
+		    	      console.log(aCookie.length)	    	      
+			    });
+			    
+
+			    $.cookie("good",JSON.stringify(aCookie),{expires:7 , path:"/"});
+						
+						//console.log($.cookie("good") );
+						//$(e.target).parent().remove()
+			      $(e.target).parent().remove()
+			     if(aCookie.length==0){
+			   var $li=$('<li style="height: 39px;background: #fff;text-align: center;line-height: 39px;">东西都不买，滚</li>')
+					$('#list').append($li)
+					
+					 $.cookie("good",JSON.stringify(aCookie),{expires:-1 , path:"/"});
+					
+			            }
+			})
+	
+		})
+		
+		
+		</script>
+		
+		<script type="text/javascript">
+			$(function(){
+				$('#xialan .w4').click(function(){var str = $.cookie('login');
+				
+				if(str==undefined ||str==""){
+					$('#top #xxxx a').html('请登录').css('color','orangered');
+					open('denglu.html','_parent')
+				}else{
+					var oCookie = JSON.parse(str);
+					console.log(oCookie);
+					if(oCookie.type==false){
+						$('#top #xxxx a').html('请登录').css('color','orangered');
+						open('denglu.html','_parent')
+					}else{
+						$('#top #xxxx a').html(oCookie.name).css('color','orangered');
+					}
+				}})
+				
+			})
+		</script>
+		
+		
+		
+		<script>
+			$(function() {
+
+				$('#waibuwei').load('weibu.html')
+			})
+		</script>
+		<script type="text/javascript" src="js/toubu.js"></script>
+	</head>
+
+	<body>
+		<div id="nav">
+			<ul>
+				<li>
+					<a href="index.html">首页</a>
+				</li>
+				<li id="sp">
+					<a href="#">品牌系列</a>
+					<span id="spa">
+						<a class="top1" href="#">维您</a>
+						<a href="#">LA CELLER</a>
+						<a href="#">秘密花园</a>
+						<a href="#" style="border-bottom: 1px solid #888;">SONOKO</a>
+					</span>
+				</li>
+				<li>
+					<a href="shangpinliebiao.html?meirong.json&0">美容护肤</a>
+				</li>
+				<li>
+					<a href="shangpinliebiao.html?jiankang.json&6">健康养生</a>
+				</li>
+				<li>
+					<a href="shangpinliebiao.html?jiayong.json&12">家居日用</a>
+				</li>
+				<li>
+					<a href="#">积分换购</a>
+				</li>
+				<li class="vip">
+					<a href="#">VIP<br />会员专区</a>
+				</li>
+				<li>
+					<a href="#">电子刊物</a>
+				</li>
+				<li>
+					<a href="#">关于麦考林</a>
+				</li>
+			</ul>
+		</div>
+
+		<div id="top">
+			<div class="logo">
+				<a href="index.html"><img src="img/newlogo.png" /></a>
+			</div>
+
+			<ul>
+				<li>
+					<a class="search" href="#"></a>
+				</li>
+				<li class="top-bg" id="xxxx">
+					<a href="denglu.html">登录</a>
+				</li>
+				<li class="top-bg">
+					<a href="zhuce.html">注册</a>
+				</li>
+				<li class="top-bg">
+					<a href="#">我的账户</a>
+				</li>
+				<li class="none">
+					<a class="car" href="gouwucar.html"></a>
+				</li>
+				<li class="none"><img src="img/tel-call.png" /></li>
+			</ul>
+			<div id="phone">
+				<a href="#"><img src="img/rs1.png" /></a>
+				<a href="#" id="tel"><img src="img/rs2.png" /></a>
+				<a href="#"><img id="scr" src="img/right.png" / style="display: none;"></a>
+			</div>
+			<div id="ke"><img src="img/ke.png" /></div>
+		</div>
+
+		<div style="width:1002px;background: #fff;margin: 0 auto;position: relative;padding-bottom: 40px;">
+			<h3 id="h33"><p></p>购物车</h3>
+			<ul id="list">
+				<li class="list1">
+					<input class="o0" type="checkbox" />
+					<span class="o1">商品名称</span><span class="o2">价格</span>
+					<span class="o3">数量</span><span class="o4">小计（元）</span>
+					<span class="o5">操作</span>
+				</li>
+				<!--<li><input class="c0" type="checkbox" />
+					<a class="c1" href="#"><img src="images/meirong1.jpg"/></a>
+					<a class="c2" href="#">维您综合蔬果乳酸酵素（固体饮料</a>
+					<span class="c3">￥360</span>
+					<span class="c4"><a href="#">-</a><span>1</span><a href="#">+</a></span>
+					<span class="c5">￥360</span>
+					<a class="c6" href="#">X删除</a>
+				</li>-->
+			</ul>
+			<div id="xialan"><input class="w0" type="checkbox">
+			<span class="w1">全选</span>
+				<a class="w2" class="" href="#">继续购物</a>
+				<a class="w3" href="#">|&nbsp;&nbsp;清空选中商品</a>
+				<a class="w4" href="#">立即结算</a>
+			</div>
+		</div>
+
+		<div id="waibuwei"></div>
+	</body>
+
+</html>

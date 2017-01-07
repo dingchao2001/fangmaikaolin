@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<title></title>
+<link rel="stylesheet" href="css/weiba.css" />
+<style>
+* {margin: 0;padding: 0}
+#denglu {height: 725px;width: 100%;background: url(img/login-reg.gif) -318px 0;position: relative;}
+#denglu .logo {
+	position: absolute;
+	left: 132px;
+	top: 12px;
+}
+#denglu #biao {
+	height: 506px;
+	width: 341px;
+	position: absolute;
+	left: 744px;
+	top: 100px;
+	background: rgba(255, 255, 255, 0.6)
+}
+
+#denglu #biao label {
+	height: 40px;
+	width: 280px;
+	display: block;
+	border: 1px solid #888;
+}
+#biao .orange1,#biao .orange2{text-decoration: underline;color: orange;}
+.orange1{position: absolute;top: 24px;left: 102px;}
+.orange2{position: absolute;top: 24px;left: 262px;}
+.toutou{position: absolute;left: 31px;top: 24px;}
+#denglu i {
+	display: inline-block;
+	height: 22px;
+	width: 22px;
+	margin: 8px;
+	float: left;
+}
+
+input {
+	background: rgba(255, 255, 255, 0);
+}
+
+.i1 {
+	background: url(img/index-bg.png) no-repeat -62px 0;
+}
+
+.i2 {background: url(img/index-bg.png) no-repeat -60px -44px;}			
+.user,
+.pass {
+	height: 40px;
+	width: 240px;
+	border: 0;
+	margin: 0px;
+	float: right;
+}
+
+.lab1 {
+	position: absolute;
+	left: 31px;
+	top: 50px;
+}
+
+.lab2 {
+	position: absolute;
+	left: 31px;
+	top: 118px;
+}
+
+.yan {
+	position: absolute;
+	top: 188px;
+	left: 31px;
+}
+
+#denglu #biao .sub {
+	height: 46px;
+	width: 280px;
+	background: #d10048;
+	position: absolute;
+	top: 300px;
+	left: 31px;
+	border-radius: 3px 3px 3px 3px;
+	border: 0;
+}
+
+#di {
+	position: absolute;
+	left: 31px;
+	top: 382px;
+}
+
+#di span {
+	display: block;
+	line-height: 45px;
+	float: left;
+}
+
+#di i {
+	height: 40px;
+	width: 40px;
+	float: right;
+}
+
+#di .k1 {
+	background: url(img/index-bg.png) no-repeat -45px -113px;
+}
+
+#di .k2 {
+	background: url(img/index-bg.png) no-repeat -55px -170px;
+}
+.check{position: absolute;left: 31px;top: 263px;}
+.jizhu {position: absolute;left: 57px;top:263px;}
+.forget {position: absolute;right:29px;top:263px ;}
+.pp{position: absolute;top:228px;left: 31px;display: none;}
+ .pp span{display: inline-block;height: 16px;line-height: 16px;margin-top: 6px;color: #f83652;}
+ .pp i{display: inline-block;height: 16px;width: 16px;background: url(img/index-bg.png) no-repeat -65px -225px;}
+
+
+</style>
+<link rel="stylesheet" href="css/jquery.idcode.css" />
+<script type="text/javascript" src="js/jquery-1.12.3.js"></script>
+<script type="text/javascript" src="js/jquery.idcode.js" ></script>
+<script type="text/javascript" src="js/jquery.cookie.js" ></script>
+<script>
+$(function() {
+
+	$('#foott').load('weibu.html')
+	$.idcode.setCode();
+})
+</script>
+<script>
+$(function(){
+	
+$('.sub').click(function(){
+ 
+     
+       var IsBy = $.idcode.validateCode()  //调用返回值，返回值结果为true或者false
+
+       if(!IsBy){
+           $('.pp').css('display','block')
+			$('.pp').find('span').html('请输入正确的验证码')
+        }    
+    
+    
+    else {
+             $('.pp').css('display','none')
+           
+     if($('#username').val()!="" && $('#password').val()!=""){      
+       //获取cookie的用户信息
+	var sCookie = $.cookie('user');
+			if(sCookie==undefined || sCookie==""){
+				//cookie为空时表示没有注册用户
+				//console.log('用户没有注册');
+				open('zhuce.html')
+			}else{
+				var bRegister = false;  //表示用户没有注册
+				//将cookie转换成数组
+				var aCookie = JSON.parse(sCookie);
+				console.log(aCookie);				
+				//遍历数组判断输入的用户信息是否已注册
+				$.each(aCookie, function() {
+					
+			   if( this.user == $('#username').val() && this.psw == $('#password').val()){
+						//已注册修改 注册状态；
+						bRegister = true;
+					}
+					
+				});
+				
+				if(bRegister){
+					//用户已注册
+					console.log("登陆成功");
+					//修改登录状态
+					var obj = {type:true,name:$('#username').val()};
+					
+					$.cookie('login',JSON.stringify(obj),{expires:7 , path:"/"});
+				console.log($.cookie('login'));
+				
+				open('index.html')
+					
+					
+					
+				}
+				else{
+			      $('.pp').css('display','block')
+			      $('.pp').find('span').html('请输入正确的用户名和密码')															
+					//用户未注册
+					//console.log("登陆失败");
+					var obj = {type:false};
+				
+				//修改cookie里面的登录状态
+				$.cookie('login',JSON.stringify(obj),{expires:7 , path:"/"});
+				console.log($.cookie('login'));
+				open('zhuce.html')
+				
+				}
+			}	
+	
+}
+}
+})
+
+})
+
+</script>
+
+
+
+</head>
+
+<body>
+<div id="denglu">
+<div class="logo">
+	<a href="index.html"><img src="img/newlogo.png" /></a>
+</div>
+<div id="biao">
+	<span class="toutou">还不是会员？</span>
+	<a class="orange1" href="zhuce.html">免费注册</a>
+	<a class="orange2" href="#">贵宾激活</a>
+
+		<label class="lab1"><i class="i1"></i><input id="username" class="user" type="text" placeholder="用户名"/></label><br />
+		<label class="lab2"><i class="i2"></i><input id="password" class="pass" type="password" placeholder="密码"/></label><br />
+		<label class="yan"><input type="text" id ="Txtidcode" class ="txtVerification" placeholder="验证码"><span id="idcode"></span><span>换一张</span></label><br />
+		<p class="pp"><i></i><span></span></p>
+		<input class="check" type="checkbox" /><span class="jizhu">记住密码</span>
+		<a href="#" class="forget">忘记密码</a><br />
+		<input class="sub" type="button" value="登录" />
+
+	
+	<div id="di"><span>合作网站账号登录：</span>
+		<a href="#"><i class="k1"></i></a>
+		<a href="#"><i class="k2">
+			</i></a>
+	</div>
+
+</div>
+
+</div>
+<div id="foott"></div>
+</body>
+
+</html>
